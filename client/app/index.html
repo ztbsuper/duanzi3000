@@ -12,6 +12,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css" >
     <!-- endbuild -->
   </head>
   <body ng-app="clientApp">
@@ -22,18 +23,18 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+        <ul class="nav nav-pills pull-right" ng-controller="headerCtrl">
+            <li ng-class="{active : isActive('/')}"><a href="#/">段子页</a></li>
+            <li ng-class="{active : isActive('/publish')}"><a ng-href="#/publish">发段子</a></li>
+            <li ng-class="{active : isActive('/about')}"><a ng-href="#/about">关于我</a></li>
         </ul>
-        <h3 class="text-muted">client</h3>
+        <h3 class="text-muted">3000段子手</h3>
       </div>
 
       <div ng-view=""></div>
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        欢迎各位贡献段子。
       </div>
     </div>
 
