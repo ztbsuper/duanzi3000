@@ -13,3 +13,4 @@ hs_err_pid*
 
 .idea/
 **/node_module/
+**/node_modules/
