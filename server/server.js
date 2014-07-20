@@ -7,7 +7,8 @@
 var express = require('express'); 		// call express
 var app = express(); 				// define our app using express
 var bodyParser = require('body-parser');
-
+// validator
+var validator = require('validator');
 // mongo db configurations
 var mongo_url = "mongodb://localhost:27017";
 var mongo_db = "3kduanzi";
@@ -38,36 +39,33 @@ router.get('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
-router.route('/duanzi')
+router.route('/set')
     .post(function (req, res) {
         var error = 0;
-        req.body.duanzis.forEach(function (item) {
-            var duanzi = new Duanzi();
-            duanzi.body = item.body;
-            duanzi.author = req.body.author;
-            duanzi.save(function (err) {
-                if (err) {
-                    error = 1;
-                    console.log("ERROR : " + err);
-                }
-            })
-        });
-        if (error == 1) {
-            res.status(500).json({message: 'unknown error'});
-        } else {
-            res.status(201).json({message: 'created'});
-        }
-    })
-    .get(function (req, res) {
-        Duanzi.find(function (error, duanzis) {
-            if (error) {
-                res.status(500).json({message: "unknown error"});
-                console.log("ERROR : " + error);
+        if(validator.isJSON(req.body) && validator.isLength(req.body.title,4)){
+            req.body.duanzis.forEach(function (item) {
+                var duanzi = new Duanzi();
+                duanzi.body = item.body;
+                duanzi.title = req.body.title;
+                duanzi.author = req.body.author == ""? "无名氏": req.body.title;
+                duanzi.save(function (error) {
+                    if (error) {
+                        error = 1;
+                        console.log("ERROR : " + error);
+                    }
+                })
+            });
+            if (error == 1) {
+                res.status(500).json({message: 'unknown error'});
             } else {
-                res.json(duanzis);
+                res.status(201).json({message: 'created'});
             }
-        })
+        }else{
+            res.status(400).json({message:'illeaged'});
+        }
+
     });
+
 
 // more routes for our API will happen here
 
