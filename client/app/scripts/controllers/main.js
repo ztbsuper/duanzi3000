@@ -9,12 +9,32 @@
  */
 
 var app = angular.module('clientApp');
-app.controller('headerCtrl', function ($scope,$location) {
+app.controller('MainCtrl', function () {
+});
+app.controller('headerCtrl', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
         return viewLocation == $location.path();
     }
 });
 
-app.controller('publishCtrl',function($scope,$location){
+app.controller('publishCtrl', function ($scope) {
+    $scope.placeholder = "直接贴段子，两个回车自动分段";
+    $scope.duanzis = [];
+    $scope.$watch('contents', function () {
+        var separator = new RegExp("\n{2,}");
+        if (separator.test($scope.contents)) {
+            var result = strip_tags($scope.contents).split(/\n{2,}/g);
+            result.forEach(function (e) {
+                if (e.trim() != "") {
+                    $scope.duanzis.push(e.trim());
+                }
+            });
+            $scope.contents = "";
+            console.log($scope.duanzis);
+        }
+    });
 
+    $scope.remove = function(index){
+        $scope.duanzis.splice(index,1);
+    };
 });
