@@ -3,10 +3,11 @@ var Schema = mongoose.Schema;
 
 var DuanziSchema = new Schema({
     body: String,
-    author: String,
-    title:String,
+    author: {type: String, default: "无名氏"},
+    title: String,
+    uuid: String,
     date: { type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('Duanzi',DuanziSchema);
+module.exports = mongoose.model('Duanzi', DuanziSchema);
 

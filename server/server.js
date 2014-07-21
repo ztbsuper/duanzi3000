@@ -16,6 +16,7 @@ var mongo_db = "3kduanzi";
 var mongoose = require('mongoose');
 mongoose.connect(mongo_url + "/" + mongo_db);
 
+var uuid = require('./guid.js');
 var Duanzi = require('./duanzi.js');
 
 // configure app to use bodyParser()
@@ -27,7 +28,7 @@ var router = express.Router(); 				// get an instance of the express Router
 var port = process.env.PORT || 8080; 		// set our port
 
 router.use(function (req, res, next) {
-    console.log("some guys plugged in");
+    console.log(Date.now() + " [" + req.ip + "] plugged in:" + req.originalUrl);
     next();
 });
 
@@ -42,28 +43,64 @@ router.get('/', function (req, res) {
 router.route('/set')
     .post(function (req, res) {
         var error = 0;
-        if(validator.isJSON(req.body) && validator.isLength(req.body.title,4)){
-            req.body.duanzis.forEach(function (item) {
-                var duanzi = new Duanzi();
-                duanzi.body = item.body;
-                duanzi.title = req.body.title;
-                duanzi.author = req.body.author == ""? "无名氏": req.body.title;
-                duanzi.save(function (error) {
-                    if (error) {
-                        error = 1;
-                        console.log("ERROR : " + error);
-                    }
-                })
-            });
-            if (error == 1) {
-                res.status(500).json({message: 'unknown error'});
-            } else {
-                res.status(201).json({message: 'created'});
+        var setNumber = uuid.uuid();
+        // validator
+        req.body.duanzis.forEach(function (item) {
+            var duanzi = new Duanzi();
+            if (!validator.isLength(item.body.trim(), 0, 1024)) {
+                return;
             }
-        }else{
-            res.status(400).json({message:'illeaged'});
+            duanzi.body = item.body;
+            duanzi.author = req.body.author.trim() == "" ? duanzi.author : req.body.author.trim();
+            duanzi.title = req.body.title.trim() == "" ? null : req.body.title.trim();
+            duanzi.uuid = setNumber;
+            duanzi.save(function (error) {
+                if (error) {
+                    error = 1;
+                    console.log("ERROR : " + error);
+                }
+            })
+        });
+        if (error == 1) {
+            res.status(500).json({message: 'unknown error'});
+        } else {
+            res.status(201).json({message: 'created'});
         }
 
+    })
+    .get(function (req, res) {
+        Duanzi.find().distinct('uuid', function (error, duanzis) {
+            if (error) {
+                res.status(500).json({message: 'unknown error'});
+                console.log(error);
+            } else {
+                res.status(200).json(duanzis);
+            }
+        })
+    });
+
+router.route('/set/:uuid')
+    .get(function (req, res) {
+        console.log("need find uuid: " + req.params.uuid);
+        Duanzi.find({"uuid": req.params.uuid}, function (error, duanzis) {
+            if (error) {
+                res.status(500).json({message: "unknown error"});
+                console.log("ERROR:" + error);
+            } else {
+                res.json(duanzis);
+            }
+        })
+    });
+router.route('/count')
+    .get(function (req, res) {
+        Duanzi.count(function (error, count) {
+            if (error) {
+                res.status(500).json({message: "unknown error"});
+                console.log("ERROR:" + error);
+            } else {
+                res.json(count);
+            }
+        });
     });
 
 
