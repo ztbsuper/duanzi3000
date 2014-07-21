@@ -30,6 +30,7 @@ var port = process.env.PORT || 8080; 		// set our port
 
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     console.log(Date.now() + " [" + req.ip + "] plugged in:" + req.originalUrl);
     next();
 });
@@ -46,26 +47,33 @@ router.get('/', function (req, res) {
 router.route('/collection')
     .post(function (req, res) {
         var error = 0;
-        var uuid = guid.guid();
+//        var uuid = guid.guid();
         // validator
+        if (!validator.isLength(req.body.duanzis, 0) ||
+            typeof req.body.duanzis == 'undefined') {
+            res.status(500).json({message: "unknown error"});
+            return;
+        }
+        var collection = new Collection();
+        collection.author = strip_tags(req.body.author.trim()) == "" ? null : strip_tags(req.body.author.trim());
+        collection.title = strip_tags(req.body.title.trim()) == "" ? null : strip_tags(req.body.title.trim());
+        collection.count = req.body.duanzis.length;
+        collection.save(function (error, saved) {
+            if (error) {
+                error = 1;
+                console.log("ERROR : " + error);
+            }
+            collection = saved;
+        });
+
         req.body.duanzis.forEach(function (item) {
             var duanzi = new Duanzi();
-            var collection = new Collection();
-            if (!validator.isLength(item.body.trim(), 0, 1024)) {
+            if (!validator.isLength(item, 0, 1024)) {
                 return;
             }
-            duanzi.body = item.body;
-            collection.author = req.body.author.trim() == "" ? duanzi.author : req.body.author.trim();
-            collection.title = req.body.title.trim() == "" ? null : req.body.title.trim();
-            duanzi.uuid = uuid;
-            collection.uuid = uuid;
+            duanzi.body = item;
+            duanzi.collectionid = collection._id;
             duanzi.save(function (error) {
-                if (error) {
-                    error = 1;
-                    console.log("ERROR : " + error);
-                }
-            });
-            collection.save(function (error) {
                 if (error) {
                     error = 1;
                     console.log("ERROR : " + error);
@@ -90,10 +98,9 @@ router.route('/collection')
         })
     });
 
-router.route('/collection/:uuid')
+router.route('/collection/:collectionid')
     .get(function (req, res) {
-        console.log("need find uuid: " + req.params.uuid);
-        Duanzi.find({"uuid": req.params.uuid}, function (error, duanzis) {
+        Duanzi.find({collectionid: req.params.collectionid}, function (error, duanzis) {
             if (error) {
                 res.status(500).json({message: "unknown error"});
                 console.log("ERROR:" + error);

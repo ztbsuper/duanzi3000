@@ -43,3 +43,9 @@ var strip_tags = function (input, allowed) {
             return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
         });
 };
+
+var config = {
+    host: "http://127.0.0.1:8080/api",
+    collection:"/collection",
+    count:"/count"
+};

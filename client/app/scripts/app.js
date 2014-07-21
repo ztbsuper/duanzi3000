@@ -27,9 +27,13 @@ angular
                 templateUrl: 'views/about.html',
                 controller: 'AboutCtrl'
             })
-            .when('/publish',{
-                templateUrl:'views/publish.html',
+            .when('/publish', {
+                templateUrl: 'views/publish.html',
                 controller: 'publishCtrl'
+            })
+            .when('/collection/:collectionid', {
+                templateUrl: 'views/collection.html',
+                controller: 'collectionCtrl'
             })
             .otherwise({
                 redirectTo: '/'

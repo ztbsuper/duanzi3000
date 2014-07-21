@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 var DuanziSchema = new Schema({
     body: String,
-    uuid: String
+    collectionid: String,
+    thumbsup: {type: Number, default: 0},
+    thumbsdown: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Duanzi', DuanziSchema);
