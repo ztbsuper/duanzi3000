@@ -1,28 +1,31 @@
 <h2>发段子</h2>
 
-<div class="row" style="padding-bottom: 20px;">
-    <div style="padding-bottom: 20px;">
+<div class="row" style="padding-bottom: 20px;align:right;">
+    <div style="padding:10px 0 10px 0;">
         <input ng-model="title" placeholder="给这次提交取个名字" class="form-control row">
     </div>
-    <div >
+    <div style="padding:10px 0 10px 0;">
         <input ng-model="author" placeholder="给你自己一个名字" class="form-control row">
     </div>
-</div>
-
-<div class="text_input row">
-    <div class="textarea row">
+    <div class="duanzi_card" style="padding: 10px 0 10px 0;" ng-if="duanzis.length > 0">
+        <div ng-repeat="duanzi in duanzis track by $index" class="alert alert-info row">
+            <button type="button" class="close" ng-click="remove($index)"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">Close</span></button>
+            <div ng-bind-html="duanzi">
+            </div>
+        </div>
+    </div>
+    <div class="textarea row" style="padding: 10px 0 10px 0">
         <textarea ng-model="contents" ng-trim="false" class="form-control" placeholder="{{placeholder}}"
                   style="height:200px;"> </textarea>
     </div>
-</div>
-<div class="row" style="padding-bottom: 20px;"></div>
-
-<div class="duanzi_card">
-    <div ng-repeat="duanzi in duanzis track by $index" class="alert alert-info row">
-        <button type="button" class="close" ng-click="remove($index)"><span aria-hidden="true">&times;</span><span
-                class="sr-only">Close</span></button>
-        <div ng-bind-html="duanzi">
-        </div>
+    <div style="padding:10px 0 10px 0;">
+        <button class="btn btn-info " ng-if="duanzis.length > 0" ng-click="submit();">提交</button>
     </div>
 </div>
+
+
+<div class="row" style="padding-bottom: 20px;"></div>
+
+
 <div class="row" style="padding-bottom: 20px;"></div>

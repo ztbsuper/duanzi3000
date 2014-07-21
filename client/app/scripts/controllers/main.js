@@ -9,7 +9,12 @@
  */
 
 var app = angular.module('clientApp');
-app.controller('MainCtrl', function () {
+app.controller('MainCtrl', function ($scope,API) {
+    $scope.sets=[];
+    var bindVals = function(data,status){
+        $scope.sets = data;
+    };
+     API.fetchSets().success(bindVals);
 });
 app.controller('headerCtrl', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
@@ -37,4 +42,11 @@ app.controller('publishCtrl', function ($scope) {
     $scope.remove = function(index){
         $scope.duanzis.splice(index,1);
     };
+
+    $scope.submit = function(){
+        if($scope.duanzis.length <=0){
+            return;
+        }
+
+    }
 });
