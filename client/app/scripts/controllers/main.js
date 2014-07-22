@@ -1,25 +1,22 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name clientApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the clientApp
- */
-
 var app = angular.module('clientApp');
-app.controller('indexCtrl', function ($scope, API) {
+app.controller('indexCtrl', function ($scope, $interval, API) {
     $scope.count = 0;
     API.countAllDuanzi().success(function (data, status) {
-        $scope.count = data;
-    });
+            $scope.count = data;
+        }
+    );
+
 });
 app.controller('MainCtrl', function ($scope, API) {
     $scope.collections = [];
     API.fetchCollections().success(function (data, status) {
         $scope.collections = data;
     });
+    $scope.isNull =function(str){
+        return str == "";
+    }
 });
 app.controller('headerCtrl', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
@@ -27,9 +24,11 @@ app.controller('headerCtrl', function ($scope, $location) {
     }
 });
 
-app.controller('publishCtrl', function ($scope, API) {
+app.controller('publishCtrl', function ($scope, $location, API) {
     $scope.placeholder = "直接贴段子，两个回车自动分段";
     $scope.duanzis = [];
+    $scope.title="";
+    $scope.author="";
     $scope.$watch('contents', function () {
         var separator = new RegExp("\n{2,}");
         if (separator.test($scope.contents)) {
@@ -58,23 +57,55 @@ app.controller('publishCtrl', function ($scope, API) {
         };
         API.postCollection(obj)
             .success(function (data, status) {
-
+                $location.path("/collection/" + data.collectionid);
             })
             .error(function (data, status) {
-
             });
 
     }
 });
 
-app.controller('collectionCtrl', function ($scope, $routeParams, API) {
-    $scope.duanzis=[];
+app.controller('collectionCtrl', function ($scope, $routeParams, $location, $window, API) {
+    $scope.duanzis = [];
+    $scope.del = [];
     API.fetchDuanzis($routeParams.collectionid)
-        .success(function(data,status){
+        .success(function (data, status) {
             $scope.duanzis = data;
-
         })
-        .error(function(data,status){
+        .error(function (data, status) {
             alert("error occurred");
         });
+    $scope.removeFromDel = function (index) {
+        $scope.duanzis.push($scope.del.splice(index, 1)[0]);
+    };
+    $scope.removeFromDuanzis = function (index) {
+        $scope.del.push($scope.duanzis.splice(index, 1)[0]);
+    };
+    $scope.thumbsup = function (_id) {
+        API.thumbsup(_id)
+            .success(function (data, status) {
+                $window.location.reload();
+            })
+            .error(function (data, status) {
+                $window.location.reload();
+            })
+    };
+    $scope.thumbsdown = function (_id) {
+        API.thumbsdown(_id)
+            .success(function (data, status) {
+                $window.location.reload();
+            })
+            .error(function (data, status) {
+                $window.location.reload();
+            })
+    };
+    $scope.remove = function () {
+        API.deleteDuanzis($scope.del, $scope.cheatCode)
+            .success(function (data, status) {
+                $location.path("/")
+            })
+            .error(function (data, status) {
+                console.log(data);
+            });
+    }
 });

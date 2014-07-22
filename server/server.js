@@ -14,11 +14,13 @@ var mongo_url = "mongodb://localhost:27017";
 var mongo_db = "3kduanzi";
 // mongo db connection
 var mongoose = require('mongoose');
+var cheatCode = '1jcsxdl';
 mongoose.connect(mongo_url + "/" + mongo_db);
 
 var guid = require('./guid.js');
 var Duanzi = require('./duanzi.js');
 var Collection = require('./collection.js');
+var strip_tags = require('./strip_tags.js');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -31,6 +33,10 @@ var port = process.env.PORT || 8080; 		// set our port
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Cache-Control", "no-cache");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,DELETE,POST");
+    res.header("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, " +
+        "Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,cheatCode");
     console.log(Date.now() + " [" + req.ip + "] plugged in:" + req.originalUrl);
     next();
 });
@@ -40,14 +46,12 @@ router.use(function (req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
-
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
 router.route('/collection')
     .post(function (req, res) {
         var error = 0;
-//        var uuid = guid.guid();
         // validator
         if (!validator.isLength(req.body.duanzis, 0) ||
             typeof req.body.duanzis == 'undefined') {
@@ -55,8 +59,9 @@ router.route('/collection')
             return;
         }
         var collection = new Collection();
-        collection.author = strip_tags(req.body.author.trim()) == "" ? null : strip_tags(req.body.author.trim());
-        collection.title = strip_tags(req.body.title.trim()) == "" ? null : strip_tags(req.body.title.trim());
+
+        collection.author = strip_tags.strip_tags(req.body.author.trim()) == "" ? null : strip_tags.strip_tags(req.body.author.trim());
+        collection.title = strip_tags.strip_tags(req.body.title.trim()) == "" ? null : strip_tags.strip_tags(req.body.title.trim());
         collection.count = req.body.duanzis.length;
         collection.save(function (error, saved) {
             if (error) {
@@ -83,7 +88,7 @@ router.route('/collection')
         if (error == 1) {
             res.status(500).json({message: 'unknown error'});
         } else {
-            res.status(201).json({message: 'created'});
+            res.status(201).json({message: 'created', collectionid: collection._id});
         }
 
     })
@@ -118,6 +123,72 @@ router.route('/count')
             } else {
                 res.json(count);
             }
+        });
+    });
+
+router.route('/delduanzi/:code')
+    .post(function (req, res) {
+        if (req.params.code == cheatCode) {
+            var collectionID = req.body[0].collectionid;
+            req.body.forEach(function (duanzi) {
+                Duanzi.findOneAndRemove({_id: duanzi._id}, function (error) {
+                    console.log("delete duanzi:" + duanzi._id);
+                    if (error) {
+                        console.log("ERROR:" + error);
+                    }
+                });
+            });
+            Duanzi.find({collectionid: collectionID}, function (error, result) {
+                console.log("found duanzis: " + result);
+                if (error) {
+                    console.log("ERROR:" + error);
+                }
+                if (result.length == 0) {
+                    Collection.findOneAndRemove({_id: collectionID}, function (error) {
+                        console.log("remove :" + collectionID);
+                        if (error) {
+                            console.log("ERROR:" + error);
+                        }
+                    });
+                } else {
+                    Collection.findByIdAndUpdate(collectionID, {count: result.length}, function (error, data) {
+                        console.log("update " + data);
+                    });
+                }
+            });
+
+            res.status(200).json({message: "deleted"});
+
+        } else {
+            res.status(500).json({message: "unknown error"});
+            console.log(Date.now() + " [" + req.ip + "] try to using " + req.params.code + " to hack:" + req.originalUrl);
+        }
+    });
+
+router.route('/thumbsup/:code')
+    .get(function (req, res) {
+        Duanzi.findById(req.params.code, function (error, duanzi) {
+            duanzi.thumbsup = duanzi.thumbsup + 1;
+            duanzi.save(function (error) {
+                if (error) {
+                    res.status(500).json({message: "unknown error"});
+                } else {
+                    res.status(201).json({message: "accept"});
+                }
+            });
+        });
+    });
+router.route('/thumbsdown/:code')
+    .get(function (req, res) {
+        Duanzi.findById(req.params.code, function (error, duanzi) {
+            duanzi.thumbsdown = duanzi.thumbsdown + 1;
+            duanzi.save(function (error) {
+                if (error) {
+                    res.status(500).json({message: "unknown error"});
+                } else {
+                    res.status(201).json({message: "accept"});
+                }
+            });
         });
     });
 

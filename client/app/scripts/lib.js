@@ -47,5 +47,8 @@ var strip_tags = function (input, allowed) {
 var config = {
     host: "http://127.0.0.1:8080/api",
     collection:"/collection",
-    count:"/count"
+    count:"/count",
+    delduanzi:"/delduanzi",
+    thumbsup:"/thumbsup/",
+    thumbsdown:"/thumbsdown/"
 };

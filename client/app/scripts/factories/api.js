@@ -13,6 +13,15 @@ app.factory('API', ['$http', function ($http) {
         },
         fetchDuanzis: function (collectionid) {
             return $http.get(config.host + config.collection + "/" + collectionid);
+        },
+        deleteDuanzis: function (duanzis, code) {
+            return $http.post(config.host + config.delduanzi + "/" + code, duanzis);
+        },
+        thumbsup: function (id) {
+            return $http.get(config.host + config.thumbsup + id);
+        },
+        thumbsdown: function (id) {
+            return $http.get(config.host + config.thumbsdown + id);
         }
     }
 }]);

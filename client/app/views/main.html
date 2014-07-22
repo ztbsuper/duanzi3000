@@ -1,9 +1,13 @@
+
+
 <div ng-repeat="collection in collections">
     <div class="alert alert-info">
         <span class="label label-primary">{{collection.count}}</span>
         <a ng-href="#/collection/{{collection._id}}">
             <span ng-if="collection.title == null">
-            {{collection.author}}在 {{collection.date | date : format}} 发的{{collection.count}}条段子</span>
+                <span ng-if="isNull(collection.author)">{{collection.author}}</span>
+                <span ng-if="!isNull(collection.author)">无名氏</span>
+            在 {{collection.date | date : format}} 发的{{collection.count}}条段子</span>
             <span ng-if="collection.title != null">{{collection.title}} </span>
         </a>
     </div>
