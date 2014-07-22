@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('clientApp');
 
 app.factory('API', ['$http', function ($http) {

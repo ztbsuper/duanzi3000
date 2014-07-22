@@ -1,3 +1,4 @@
+'use strict';
 var strip_tags = function (input, allowed) {
     //  discuss at: http://phpjs.org/functions/strip_tags/
     // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
