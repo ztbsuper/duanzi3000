@@ -18,9 +18,13 @@
     <div ng-bind-html="duanzi.body">
     </div>
     <div style="text-align: right;padding-right: 20px;" class="row">
-        <button class="btn btn-link" ng-click="thumbsup(duanzi._id)"><i class="fa fa-thumbs-o-up"></i>{{duanzi.thumbsup}}
+        <i ng-if="thumbUpAvailable(duanzi._id) == false" class="fa fa-thumbs-up">{{duanzi.thumbsup}}</i>
+        <button ng-if="thumbUpAvailable(duanzi._id) == true" class="btn btn-link" ng-click="thumbsup(duanzi._id)"><i
+                class="fa fa-thumbs-o-up"></i>{{duanzi.thumbsup}}
         </button>
-        <button class="btn btn-link" ng-click="thumbsdown(duanzi._id)"><i class="fa fa-thumbs-o-down"></i>{{duanzi.thumbsdown}}
+        <i ng-if="thumbDownAvailable(duanzi._id) == false" class="fa fa-thumbs-down">{{duanzi.thumbsup}}</i>
+        <button class="btn btn-link" ng-if="thumbDownAvailable(duanzi._id) == true" ng-click="thumbsdown(duanzi._id)"><i
+                class="fa fa-thumbs-o-down"></i>{{duanzi.thumbsdown}}
         </button>
         <button type="button" class="btn btn-danger btn-xs" ng-click="removeFromDuanzis($index)">Del</button>
     </div>

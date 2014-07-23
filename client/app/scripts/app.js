@@ -35,6 +35,10 @@ angular
                 templateUrl: 'views/collection.html',
                 controller: 'collectionCtrl'
             })
+            .when('/rank',{
+                templateUrl:'views/collection.html',
+                controller: 'rankCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

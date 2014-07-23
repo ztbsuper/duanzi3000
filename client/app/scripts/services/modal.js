@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('clientApp');
 
-app.factory('loadingService', ['$modal', function ($modal) {
+app.factory('loadingService',  function () {
     return {
         options: {
             templateUrl: 'views/loading.html',
@@ -9,6 +9,6 @@ app.factory('loadingService', ['$modal', function ($modal) {
             keyboard: false,
             size: 'lg'
         }
-    }
-}]);
+    };
+});
 
