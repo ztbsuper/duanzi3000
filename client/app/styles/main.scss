@@ -93,3 +93,10 @@ body {
   }
 }
 
+.progress.active.reverse .progress-bar {
+  -webkit-animation-direction: reverse;
+  -moz-animation-direction: reverse;
+  -ms-animation-direction: reverse;
+  -o-animation-direction: reverse;
+  animation-direction: reverse;
+}
