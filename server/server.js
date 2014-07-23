@@ -73,10 +73,10 @@ router.route('/collection')
 
         req.body.duanzis.forEach(function (item) {
             var duanzi = new Duanzi();
-            if (!validator.isLength(item, 0, 1024)) {
+            if (!validator.isLength(strip_tags.strip_tags(item).trim(), 0, 1024)) {
                 return;
             }
-            duanzi.body = item;
+            duanzi.body = strip_tags.strip_tags(item).trim();
             duanzi.collectionid = collection._id;
             duanzi.save(function (error) {
                 if (error) {
