@@ -19,6 +19,17 @@ app.factory('thumbs', ['StorageHelper', function (StorageHelper) {
 
 }]);
 
+app.factory('favStorage', ['StorageHelper', function (StorageHelper) {
+    return{
+        pushFav: function(duanzi_id){
+            return StorageHelper.pushStorageArrayUniq('fav',duanzi_id);
+        },
+        getFav: function(){
+            return StorageHelper.getStorageAsArray('fav');
+        }
+    }
+}]);
+
 
 app.service('StorageHelper', function () {
     this.getStorageAsArray = function (key) {
