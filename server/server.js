@@ -163,6 +163,16 @@ router.route('/delduanzi/:code')
             res.status(500).json({message: "unknown error"});
             console.log(Date.now() + " [" + req.ip + "] try to using " + req.params.code + " to hack:" + req.originalUrl);
         }
+    })
+    .get(function (req, res) {
+        Duanzi.findById(req.params.code, function (error, duanzi) {
+            if (error) {
+                res.status(500).json({message: "unknown error"});
+                console.log(error);
+            } else {
+                res.status(200).json(duanzi);
+            }
+        })
     });
 
 router.route('/thumbsup/:code')
@@ -189,6 +199,17 @@ router.route('/thumbsdown/:code')
                     res.status(201).json({message: "accept"});
                 }
             });
+        });
+    });
+router.route('/bulk')
+    .post(function (req, res) {
+        Duanzi.find({'_id': {$in: req.body}}, function (error, duanzis) {
+            if (error) {
+                console.log(error);
+                res.status(500).json({message: "unknown error"});
+            } else {
+                res.status(200).json(duanzis);
+            }
         });
     });
 

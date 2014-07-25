@@ -17,7 +17,7 @@ app.controller('collectionCtrl', function ($scope, $routeParams, $location, $win
     $scope.removeFromDuanzis = function (index) {
         $scope.del.push($scope.duanzis.splice(index, 1)[0]);
     };
-    $scope.thumbsup = function (_id) {
+    $scope.thumbup = function (_id) {
         var loading = $modal.open(loadingService.options);
 
         API.thumbsup(_id)
@@ -31,7 +31,7 @@ app.controller('collectionCtrl', function ($scope, $routeParams, $location, $win
                 $window.location.reload();
             })
     };
-    $scope.thumbsdown = function (_id) {
+    $scope.thumbdown = function (_id) {
         var loading = $modal.open(loadingService.options);
 
         API.thumbsdown(_id)
@@ -59,5 +59,6 @@ app.controller('collectionCtrl', function ($scope, $routeParams, $location, $win
     };
     $scope.thumbDownAvailable = function (duanzi_id) {
         return thumbs.thumbDownAvailable(duanzi_id);
-    }
+    };
+    $scope.predicate = " -thumbsup";
 });

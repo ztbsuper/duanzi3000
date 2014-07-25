@@ -23,6 +23,12 @@ app.factory('API', ['$http', function ($http) {
         },
         thumbsdown: function (id) {
             return $http.get(config.host + config.thumbsdown + id);
+        },
+        rank: function(page){
+            return $http.get(config.host + config.rank + page);
+        },
+        bulk: function(array){
+            return $http.post(config.host + config.bulk,array);
         }
     }
 }]);

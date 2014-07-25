@@ -52,5 +52,7 @@ var config = {
     count:"/count",
     delduanzi:"/delduanzi",
     thumbsup:"/thumbsup/",
-    thumbsdown:"/thumbsdown/"
+    thumbsdown:"/thumbsdown/",
+    rank:"/rank/",
+    bulk:"/bulk"
 };

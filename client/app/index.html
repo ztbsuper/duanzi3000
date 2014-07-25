@@ -24,9 +24,10 @@
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right" ng-controller="headerCtrl">
+            <li ng-class="{active : isActive('/rank')}"><a ng-href="#/rank">段子榜</a></li>
             <li ng-class="{active : isActive('/')}"><a href="#/">段子手</a></li>
             <li ng-class="{active : isActive('/publish')}"><a ng-href="#/publish">发段子</a></li>
-            <li ng-class="{active : isActive('/rank')}"><a ng-href="#/rank">段子榜</a> </li>
+            <li ng-class="{active : isActive('/fav')}"><a ng-href="#/fav"><i class="fa fa-heart"></i> </a></li>
             <li ng-class="{active : isActive('/about')}"><a ng-href="#/about">关于</a></li>
         </ul>
         <div class="page-header" ng-controller="indexCtrl">
@@ -98,8 +99,8 @@
 <script src="scripts/controllers/index.js"></script>
 <script src="scripts/controllers/publish.js"></script>
 <script src="scripts/controllers/about.js"></script>
-
-
+<script src="scripts/controllers/rank.js"></script>
+<script src="scripts/controllers/fav.js"></script>
 <script src="scripts/lib.js"></script>
 <!-- service -->
 <script src="scripts/services/modal.js"></script>

@@ -39,6 +39,10 @@ angular
                 templateUrl:'views/collection.html',
                 controller: 'rankCtrl'
             })
+            .when('/fav',{
+                templateUrl:'views/fav.html',
+                controller:'favCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
