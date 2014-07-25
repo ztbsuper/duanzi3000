@@ -19,7 +19,11 @@ angular
         'ui.bootstrap'
     ]).config(function ($routeProvider) {
         $routeProvider
-            .when('/', {
+            .when('/',{
+                templateUrl:'views/collection.html',
+                controller: 'rankCtrl'
+            })
+            .when('/collection', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
@@ -34,10 +38,6 @@ angular
             .when('/collection/:collectionid', {
                 templateUrl: 'views/collection.html',
                 controller: 'collectionCtrl'
-            })
-            .when('/rank',{
-                templateUrl:'views/collection.html',
-                controller: 'rankCtrl'
             })
             .when('/fav',{
                 templateUrl:'views/fav.html',
