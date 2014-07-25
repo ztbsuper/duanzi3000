@@ -21,11 +21,15 @@ app.factory('thumbs', ['StorageHelper', function (StorageHelper) {
 
 app.factory('favStorage', ['StorageHelper', function (StorageHelper) {
     return{
-        pushFav: function(duanzi_id){
-            return StorageHelper.pushStorageArrayUniq('fav',duanzi_id);
+        pushFav: function (duanzi_id) {
+            return StorageHelper.pushStorageArrayUniq('fav', duanzi_id);
         },
-        getFav: function(){
+        getFav: function () {
             return StorageHelper.getStorageAsArray('fav');
+        },
+        removeFromFav: function (duanzi_id) {
+            StorageHelper.removeFromUniqArray('fav', duanzi_id);
+
         }
     }
 }]);
@@ -49,5 +53,10 @@ app.service('StorageHelper', function () {
             array.push(value);
             localStorage.setItem(key, JSON.stringify(array));
         }
+    };
+    this.removeFromUniqArray = function (key, value) {
+        var array = localStorage.getItem(key) == null ? [] : JSON.parse(localStorage.getItem(key));
+        array.splice(array.indexOf(value), 1);
+        localStorage.setItem(key, JSON.stringify(array));
     }
 });

@@ -213,6 +213,20 @@ router.route('/bulk')
         });
     });
 
+var perPage = 10;
+router.route('/rank/:page')
+    .get(function (req, res) {
+        var pageNumber = req.params.page == null ? 0 : req.params.page;
+        var start = (req.params.page - 1) * perPage;
+        Duanzi.find({}, null, {skip: start, limit: perPage, sort: {thumbsup: -1}}, function (error, duanzis) {
+            if (error) {
+                res.status(500).json({message: "unknown error"});
+            } else {
+                res.status(200).json(duanzis);
+            }
+        });
+    });
+
 
 // more routes for our API will happen here
 

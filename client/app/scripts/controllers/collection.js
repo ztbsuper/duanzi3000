@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('clientApp');
 
-app.controller('collectionCtrl', function ($scope, $routeParams, $location, $window, API, loadingService, $modal, thumbs) {
+app.controller('collectionCtrl', function ($scope, $routeParams, $location, $window, API, loadingService, $modal, thumbs, favStorage) {
     $scope.duanzis = [];
     $scope.del = [];
     API.fetchDuanzis($routeParams.collectionid)
@@ -61,4 +61,21 @@ app.controller('collectionCtrl', function ($scope, $routeParams, $location, $win
         return thumbs.thumbDownAvailable(duanzi_id);
     };
     $scope.predicate = " -thumbsup";
+
+    $scope.favAvailable = function (_id) {
+        return favStorage.getFav().indexOf(_id) == -1;
+    };
+
+    $scope.favs = favStorage.getFav();
+
+    $scope.pushFav = function (_id) {
+        favStorage.pushFav(_id);
+
+    };
+    $scope.removeFromFav = function (_id) {
+        favStorage.removeFromFav(_id);
+
+    };
+
+
 });

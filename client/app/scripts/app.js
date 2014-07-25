@@ -20,7 +20,7 @@ angular
     ]).config(function ($routeProvider) {
         $routeProvider
             .when('/',{
-                templateUrl:'views/collection.html',
+                templateUrl:'views/rank.html',
                 controller: 'rankCtrl'
             })
             .when('/collection', {
