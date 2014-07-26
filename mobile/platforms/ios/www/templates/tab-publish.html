@@ -1,20 +1,21 @@
 <ion-view title="我要发个段子">
-    <ion-content class="has-header padding ">
-        <div class="list">
+    <ion-content class="has-header padding">
+        <div class="list" >
             <label class="item item-input item-floating-label">
-                <span class="input-label">标题</span>
-                <input type="text" ng-model="title" placeholder="给这次提交取个名字">
+                <span class="input-label" >标题</span>
+                <input type="text" ng-model="duanzi.title" placeholder="给这次提交取个名字">
             </label>
             <label class="item item-input item-floating-label">
                 <span class="input-label">姓名</span>
-                <input type="text" ng-model="author" placeholder="给你自己一个名字">
+                <input type="text" ng-model="duanzi.author" placeholder="给你自己一个名字">
             </label>
             <label class="item item-input item-floating-label">
                 <span class="input-label">正文</span>
-                <textarea ng-model="duanzi"  rows="6" placeholder="段子">
+                <textarea ng-model="duanzi.body"  rows="6" placeholder="段子">
                 </textarea>
             </label>
-            <button ng-if="!loading" class="button  button-positive button-full"
+            <button ng-if="!loading && duanzi.body.length > 0"
+                    class="button  button-positive button-full"
                     ng-click="submit()"> 提交
             </button>
             <button ng-if="loading" class="button  button-clear button-full">

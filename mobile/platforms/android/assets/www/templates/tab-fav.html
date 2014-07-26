@@ -1,5 +1,22 @@
 <ion-view title="我最爱的段子">
     <ion-content class="has-header padding">
-        <h1>段子</h1>
+        <div ng-repeat="duanzi in duanzis | orderBy:predicate:reverse" class="list card" ng-if="duanzis.length > 0">
+            <div class="item item-text-wrap" ng-bind-html="duanzi.body">
+
+            </div>
+            <div class="item item-divider" style="text-align: right;">
+                <a href="#" ng-if="favAvailable(duanzi._id)"
+                   ng-click="pushFav(duanzi._id)">
+                    <i class="ion-ios7-heart-outline favHeart"></i>
+                </a>
+                <a href="#" ng-if="!favAvailable(duanzi._id)"
+                   ng-click="removeFromFav(duanzi._id)">
+                    <i class="ion-ios7-heart favHeart"></i>
+                </a>
+            </div>
+        </div>
+        <div ng-if="duanzis.length ==0">
+            <span>你还没有收藏过段子，去找找看吧</span>
+        </div>
     </ion-content>
 </ion-view>

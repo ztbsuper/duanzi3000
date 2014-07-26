@@ -17,3 +17,13 @@ Terminating in response to SpringBoard's termination.
 2014-07-26 11:33:24.797 HelloCordova[906:70b] Resetting plugins due to page load.
 2014-07-26 11:33:25.093 HelloCordova[906:70b] Finished load of: file:///Users/tbzhang/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/F24D2F03-A35E-4001-BF2E-6FCAECD15D65/HelloCordova.app/www/index.html#/tab/rank
 Terminating in response to SpringBoard's termination.
+2014-07-26 23:14:07.688 3000段子手[1710:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-26 23:14:07.709 3000段子手[1710:70b] Unlimited access to network resources
+2014-07-26 23:14:07.712 3000段子手[1710:70b] Fix applied for database locations?: YES
+2014-07-26 23:14:07.841 3000段子手[1710:70b] [CDVTimer][keyboard] 0.087976ms
+2014-07-26 23:14:07.842 3000段子手[1710:70b] CDVPlugin class CDVStatusBar (pluginName: statusbar) does not exist.
+2014-07-26 23:14:07.842 3000段子手[1710:70b] [CDVTimer][statusbar] 0.321031ms
+2014-07-26 23:14:07.842 3000段子手[1710:70b] [CDVTimer][TotalPluginStartup] 1.082003ms
+2014-07-26 23:14:07.941 3000段子手[1710:70b] Resetting plugins due to page load.
+2014-07-26 23:14:08.122 3000段子手[1710:70b] Finished load of: file:///Users/tbzhang/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/DA2017F2-4F07-43F9-A5CF-4F38D3E27792/3000%E6%AE%B5%E5%AD%90%E6%89%8B.app/www/index.html#/tab/rank
+Terminating in response to SpringBoard's termination.

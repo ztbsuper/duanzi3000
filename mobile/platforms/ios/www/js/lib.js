@@ -46,8 +46,8 @@ var strip_tags = function (input, allowed) {
 };
 
 var config = {
-//    host: "http://ec2-54-179-174-204.ap-southeast-1.compute.amazonaws.com:8080/api",
-    host:"http://127.0.0.1:8080/api",
+    host: "http://ec2-54-179-174-204.ap-southeast-1.compute.amazonaws.com:8080/api",
+//    host:"http://127.0.0.1:8080/api",
     collection:"/collection",
     count:"/count",
     delduanzi:"/delduanzi",
