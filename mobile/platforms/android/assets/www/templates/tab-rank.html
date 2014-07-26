@@ -1,15 +1,22 @@
+<ion-nav-bar class="bar-energized"></ion-nav-bar>
 <ion-view title="段子">
     <ion-content class="has-header padding">
         <div ng-repeat="duanzi in duanzis | orderBy:predicate:reverse" class="list card">
             <div class="item item-text-wrap" ng-bind-html="duanzi.body">
-
             </div>
+
             <div class="item item-divider" style="text-align: right;">
-                <a href="#" ng-if="favAvailable(duanzi._id)"
+                <a ng-click="thumbup(duanzi._id,$index)" href="#" class="thumbsIcon">
+                    <i class="ion ion-thumbsup "></i>{{duanzi.thumbsup}}
+                </a>
+                <a ng-click="thumbdown(duanzi._id,$index)" href="#" class="thumbsIcon">
+                    <i class="ion-thumbsdown ion "></i>{{duanzi.thumbsdown}}
+                </a>
+                <a href="#" ng-if="favAvailable(duanzi._id)" class="thumbsIcon"
                    ng-click="pushFav(duanzi._id)">
                     <i class="ion-ios7-heart-outline favHeart"></i>
                 </a>
-                <a href="#" ng-if="!favAvailable(duanzi._id)"
+                <a href="#" ng-if="!favAvailable(duanzi._id)" class="thumbsIcon"
                    ng-click="removeFromFav(duanzi._id)">
                     <i class="ion-ios7-heart favHeart"></i>
                 </a>
@@ -21,7 +28,8 @@
                 on-infinite="fetchDuanzis()">
         </ion-infinite-scroll>
         <div class="bar bar-footer" ng-if="count <= duanzis.length">
-            <div class="title"><span >段子没有了，靠你了 <a ng-href="#/tab/publish"><i class="icon ion-edit editOn"></i> </a></span></div>
+            <div class="title"><span>段子没有了，靠你了 <a ng-href="#/tab/publish"><i class="icon ion-edit editOn"></i>
+            </a></span></div>
         </div>
 
 

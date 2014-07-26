@@ -2,10 +2,14 @@
 var app = angular.module('starter.controllers', ['ionic']);
 
 
-app.controller('rankCtrl', function ($scope, API, favStorage) {
+app.controller('rankCtrl', function ($scope, API, favStorage, thumbs) {
     $scope.page = 0;
     $scope.duanzis = [];
     $scope.predicate = " -thumbsup";
+    $scope.getDuanziHeight = function (id) {
+        console.log(id);
+        return document.getElementById(id);
+    };
     API.countAllDuanzi()
         .success(function (data, status) {
             $scope.count = data;
@@ -35,8 +39,38 @@ app.controller('rankCtrl', function ($scope, API, favStorage) {
     };
     $scope.removeFromFav = function (_id) {
         favStorage.removeFromFav(_id);
-
     };
+
+
+
+    $scope.thumbup = function (_id, index) {
+        if (thumbs.thumbUpAvailable(_id) == false) {
+            return;
+        }
+        $scope.duanzis[index].thumbsup = $scope.duanzis[index].thumbsup + 1;
+        API.thumbsup(_id)
+            .success(function (data, status) {
+                thumbs.thumbUp(_id);
+            })
+            .error(function (data, status) {
+                loading.close();
+            })
+    };
+    $scope.thumbdown = function (_id) {
+        if (thumbs.thumbDownAvailable(_id)) {
+            return;
+        }
+        $scope.duanzis[index].thumbsdown = $scope.duanzis[index].thumbsdown + 1;
+
+        API.thumbsdown(_id)
+            .success(function (data, status) {
+                thumbs.thumbDown(_id);
+            })
+            .error(function (data, status) {
+            });
+    };
+
+
 });
 app.controller('favCtrl', function ($scope, API, favStorage, $window) {
     $scope.duanzis = [];
