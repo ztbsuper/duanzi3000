@@ -31,7 +31,8 @@ var router = express.Router(); 				// get an instance of the express Router
 var port = process.env.PORT || 8080; 		// set our port
 
 router.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://3kduanzi.com,http://duanzi.yishixingtai.net");
+//    res.header("Access-Control-Allow-Origin", "http://3kduanzi.com,http://duanzi.yishixingtai.net,http://localhost:8100");
+    res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Cache-Control", "no-cache");
     res.header("Access-Control-Allow-Methods", "GET,PUT,DELETE,POST");

@@ -34,7 +34,6 @@ app.controller('publishCtrl', function ($scope, $location, API, loadingService, 
             duanzis: $scope.duanzis
         };
         var loading = $modal.open(loadingService.options);
-        console.log(loading);
         API.postCollection(obj)
             .success(function (data, status) {
                 loading.close();

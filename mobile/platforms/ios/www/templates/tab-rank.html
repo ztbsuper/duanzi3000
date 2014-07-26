@@ -1,0 +1,25 @@
+<ion-view title="段子">
+    <ion-content class="has-header padding">
+        <div ng-repeat="duanzi in duanzis | orderBy:predicate:reverse" class="list card">
+            <div class="item item-text-wrap" ng-bind-html="duanzi.body">
+
+            </div>
+            <div class="item item-divider" style="text-align: right;">
+                <a href="#" ng-if="favAvailable(duanzi._id)"
+                   ng-click="pushFav(duanzi._id)">
+                    <i class="ion-ios7-heart-outline favHeart"></i>
+                </a>
+                <a href="#" ng-if="!favAvailable(duanzi._id)"
+                   ng-click="removeFromFav(duanzi._id)">
+                    <i class="ion-ios7-heart favHeart"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row" ng-if="duanzis.length < count">
+            <button type="button" class="button button-full button-positive"
+                    ng-click="fetchDuanzis()">更多的段子
+            </button>
+        </div>
+    </ion-content>
+</ion-view>
+

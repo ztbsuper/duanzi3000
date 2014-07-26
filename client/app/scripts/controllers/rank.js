@@ -77,8 +77,6 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
         return favStorage.getFav().indexOf(_id) == -1;
     };
 
-    $scope.favs = favStorage.getFav();
-
     $scope.pushFav = function (_id) {
         favStorage.pushFav(_id);
 
