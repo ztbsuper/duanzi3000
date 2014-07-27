@@ -3,58 +3,47 @@ var app = angular.module('clientApp');
 
 
 app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs, favStorage, $location, $window) {
-    $scope.page = 1;
+    $scope.page = 0;
+    $scope.loading = false;
     API.countAllDuanzi()
         .success(function (data, status) {
             $scope.count = data;
         });
-    API.rank($scope.page)
-        .success(function (data, status) {
-            $scope.duanzis = data;
-        })
-        .error(function (data, status) {
-            console.log("error");
-        });
+
+    $scope.duanzis = [];
     $scope.fetchDuanzis = function () {
+        $scope.loading = true;
         $scope.page = $scope.page + 1;
         API.rank($scope.page)
             .success(function (data, status) {
-                data.forEach(function(e){
+                data.forEach(function (e) {
                     $scope.duanzis.push(e);
+                    $scope.loading = false;
                 });
             })
             .error(function (data, status) {
                 console.log("error");
             });
     };
-
-    $scope.thumbup = function (_id) {
-        var loading = $modal.open(loadingService.options);
-
+    $scope.fetchDuanzis();
+    $scope.thumbup = function (_id, index) {
         API.thumbsup(_id)
             .success(function (data, status) {
-                loading.close();
+                $scope.duanzis[index].thumbsup = $scope.duanzis[index].thumbsup + 1;
                 thumbs.thumbUp(_id);
-                $window.location.reload();
             })
             .error(function (data, status) {
-                loading.close();
-                $window.location.reload();
-            })
+            });
     };
     $scope.thumbdown = function (_id) {
-        var loading = $modal.open(loadingService.options);
-
+        $scope.loading = true;
         API.thumbsdown(_id)
             .success(function (data, status) {
-                loading.close();
+                $scope.duanzis[index].thumbsdown = $scope.duanzis[index].thumbsdown + 1;
                 thumbs.thumbDown(_id);
-                $window.location.reload();
             })
             .error(function (data, status) {
-                loading.close();
-                $window.location.reload();
-            })
+            });
     };
     $scope.remove = function () {
         API.deleteDuanzis($scope.del, $scope.cheatCode)

@@ -3,11 +3,11 @@
     </div>
     <div style="text-align: right;padding-right: 20px;" class="row">
         <button ng-class="{disabled : thumbUpAvailable(duanzi._id) == false}" class="btn btn-link"
-                ng-click="thumbup(duanzi._id)"><i
+                ng-click="thumbup(duanzi._id,$index)"><i
                 class="fa fa-thumbs-o-up"></i>{{duanzi.thumbsup}}
         </button>
         <button class="btn btn-link" ng-class="{disabled:thumbDownAvailable(duanzi._id) == false}"
-                ng-click="thumbdown(duanzi._id)"><i
+                ng-click="thumbdown(duanzi._id,$index)"><i
                 class="fa fa-thumbs-o-down"></i>{{duanzi.thumbsdown}}
         </button>
         <button class="btn btn-link" ng-init="hover = false" ng-if="favAvailable(duanzi._id)"
@@ -20,4 +20,9 @@
         </button>
     </div>
 </div>
-<div class="row" style="padding: 0 12px 0 12px;" ng-if="duanzis.length < count"><button type="button" class="btn btn-default btn-lg btn-block" ng-click="fetchDuanzis()">更多的段子</button></div>
+<div class="row" style="text-align: center;padding: 0 12px 0 12px;">
+    <button ng-if="duanzis.length < count && loading == false" type="button" class="btn btn-default btn-lg btn-block"
+            ng-click="fetchDuanzis()">更多的段子
+    </button>
+    <span ng-if="loading == true"><i class="fa fa-spin fa-spinner" style="font-size: 40px;"></i></span>
+</div>
