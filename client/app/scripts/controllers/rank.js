@@ -2,7 +2,9 @@
 var app = angular.module('clientApp');
 
 
-app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs, favStorage, $location, adminStorage) {
+app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs, favStorage, $location, adminStorage, lastReading) {
+    $scope.lastReading = lastReading.getLastReadingPage();
+
     $scope.page = 0;
     $scope.loading = false;
     $scope.isAdmin = adminStorage.isAdmin();
@@ -12,10 +14,13 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
         });
 
     $scope.duanzis = [];
-    $scope.del=[];
+    $scope.del = [];
     $scope.fetchDuanzis = function () {
         $scope.loading = true;
-        $scope.page = $scope.page + 1;
+        $scope.page = parseInt($scope.page) + 1;
+        if ($scope.page > 1) {
+            lastReading.setReadingPage($scope.page)
+        }
         API.rank($scope.page)
             .success(function (data, status) {
                 data.forEach(function (e) {
@@ -27,7 +32,7 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
                 console.log("error");
             });
     };
-    $scope.fetchDuanzis();
+
     $scope.thumbup = function (_id, index) {
         API.thumbsup(_id)
             .success(function (data, status) {
@@ -47,7 +52,6 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
             .error(function (data, status) {
             });
     };
-
     $scope.removeFromDel = function (index) {
         $scope.duanzis.push($scope.del.splice(index, 1)[0]);
     };
@@ -74,15 +78,22 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
     $scope.favAvailable = function (_id) {
         return favStorage.getFav().indexOf(_id) == -1;
     };
-
     $scope.pushFav = function (_id) {
         favStorage.pushFav(_id);
 
     };
     $scope.removeFromFav = function (_id) {
         favStorage.removeFromFav(_id);
-
     };
-
+    $scope.readLast = function () {
+        $scope.page = $scope.lastReading;
+        $scope.duanzis = [];
+        $scope.count = $scope.count - ($scope.page - 1) * 10;
+        $scope.fetchDuanzis();
+    };
+    $scope.cleanLast = function () {
+        lastReading.cleanReadingPage();
+        $scope.lastReading = null;
+    };
 
 });

@@ -42,6 +42,20 @@ app.factory('adminStorage', function () {
     }
 });
 
+app.factory('lastReading', function () {
+    return {
+        getLastReadingPage: function () {
+            return localStorage.getItem('lastRead');
+        },
+        setReadingPage: function (page) {
+            localStorage.setItem('lastRead', page);
+        },
+        cleanReadingPage:function(){
+            return localStorage.removeItem('lastRead');
+        }
+    }
+});
+
 
 app.service('StorageHelper', function () {
     this.getStorageAsArray = function (key) {

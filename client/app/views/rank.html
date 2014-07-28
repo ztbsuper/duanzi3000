@@ -7,40 +7,45 @@
     </div>
     <button class="btn btn-danger" ng-click="remove()">Delete</button>
 </div>
-
-
 <div class="input-group" style="margin-top: 10px;" ng-if="isAdmin">
     <span class="input-group-addon">cheat Code</span>
     <input type="text" class="form-control" ng-model="cheatCode">
 </div>
 
-<div ng-repeat="duanzi in duanzis| orderBy:predicate:reverse" class="well" style="margin-top: 10px;">
-    <div ng-bind-html="duanzi.body">
-    </div>
-    <div style="text-align: right;padding-right: 20px;" class="row">
-        <button ng-class="{disabled : thumbUpAvailable(duanzi._id) == false}" class="btn btn-link"
-                ng-click="thumbup(duanzi._id,$index)"><i
-                class="fa fa-thumbs-o-up"></i>{{duanzi.thumbsup}}
-        </button>
-        <button class="btn btn-link" ng-class="{disabled:thumbDownAvailable(duanzi._id) == false}"
-                ng-click="thumbdown(duanzi._id,$index)"><i
-                class="fa fa-thumbs-o-down"></i>{{duanzi.thumbsdown}}
-        </button>
-        <button class="btn btn-link" ng-init="hover = false" ng-if="favAvailable(duanzi._id)"
-                ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="pushFav(duanzi._id)">
-            <i class="fa" ng-class="{'fa-heart-o': !hover,'fa-heart':hover}"></i>
-        </button>
-        <button class="btn btn-link" ng-init="hover = false" ng-if="!favAvailable(duanzi._id)"
-                ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="removeFromFav(duanzi._id)">
-            <i class="fa" ng-class="{'fa-heart-o': hover,'fa-heart':!hover}"></i>
-        </button>
-        <button ng-if="isAdmin" type="button" class="btn btn-danger btn-xs" ng-click="removeFromDuanzis($index)">Del
-        </button>
-    </div>
+<div class="row" style="margin-top: 10px;text-align: center;" ng-if="lastReading > 1">
+    <span>你有读段子历史，你是要<button class="btn btn-link" ng-click="readLast()">继续读</button>,还是
+        <button class="btn btn-link" ng-click="cleanLast()">从头读起</button></span>
 </div>
-<div class="row" style="text-align: center;padding: 0 12px 0 12px;">
-    <button ng-if="duanzis.length < count && loading == false" type="button" class="btn btn-default btn-lg btn-block"
-            ng-click="fetchDuanzis()">更多的段子
-    </button>
-    <span ng-if="loading == true"><i class="fa fa-spin fa-spinner" style="font-size: 40px;"></i></span>
+<div ng-init="fetchDuanzis()">
+    <div ng-repeat="duanzi in duanzis| orderBy:predicate:reverse" class="well" style="margin-top: 10px;">
+        <div ng-bind-html="duanzi.body">
+        </div>
+        <div style="text-align: right;padding-right: 20px;" class="row">
+            <button ng-class="{disabled : thumbUpAvailable(duanzi._id) == false}" class="btn btn-link"
+                    ng-click="thumbup(duanzi._id,$index)"><i
+                    class="fa fa-thumbs-o-up"></i>{{duanzi.thumbsup}}
+            </button>
+            <button class="btn btn-link" ng-class="{disabled:thumbDownAvailable(duanzi._id) == false}"
+                    ng-click="thumbdown(duanzi._id,$index)"><i
+                    class="fa fa-thumbs-o-down"></i>{{duanzi.thumbsdown}}
+            </button>
+            <button class="btn btn-link" ng-init="hover = false" ng-if="favAvailable(duanzi._id)"
+                    ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="pushFav(duanzi._id)">
+                <i class="fa" ng-class="{'fa-heart-o': !hover,'fa-heart':hover}"></i>
+            </button>
+            <button class="btn btn-link" ng-init="hover = false" ng-if="!favAvailable(duanzi._id)"
+                    ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="removeFromFav(duanzi._id)">
+                <i class="fa" ng-class="{'fa-heart-o': hover,'fa-heart':!hover}"></i>
+            </button>
+            <button ng-if="isAdmin" type="button" class="btn btn-danger btn-xs" ng-click="removeFromDuanzis($index)">Del
+            </button>
+        </div>
+    </div>
+    <div class="row" style="text-align: center;padding: 0 12px 0 12px;">
+        <button ng-if="duanzis.length < count && loading == false" type="button"
+                class="btn btn-default btn-lg btn-block"
+                ng-click="fetchDuanzis()">更多的段子
+        </button>
+        <span ng-if="loading == true"><i class="fa fa-spin fa-spinner" style="font-size: 40px;"></i></span>
+    </div>
 </div>
