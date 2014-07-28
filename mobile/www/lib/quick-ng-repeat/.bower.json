@@ -1,0 +1,34 @@
+{
+  "name": "quick-ng-repeat",
+  "main": "quick-ng-repeat.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/wishbear/quick-ng-repeat",
+  "authors": [
+    "allaud"
+  ],
+  "description": "A much more quicker replacement for AngularJS ng-repeat directive",
+  "keywords": [
+    "quick",
+    "ng-repeat",
+    "angular",
+    "fast"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "3a5f5c5b425a89e39ecfd2ad79c232387a25224f"
+  },
+  "_source": "https://github.com/wishbear/quick-ng-repeat.git",
+  "_target": "~0.0.1",
+  "_originalSource": "quick-ng-repeat",
+  "_direct": true
+}

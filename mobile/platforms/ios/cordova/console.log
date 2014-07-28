@@ -27,3 +27,12 @@ Terminating in response to SpringBoard's termination.
 2014-07-26 23:14:07.941 3000段子手[1710:70b] Resetting plugins due to page load.
 2014-07-26 23:14:08.122 3000段子手[1710:70b] Finished load of: file:///Users/tbzhang/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/DA2017F2-4F07-43F9-A5CF-4F38D3E27792/3000%E6%AE%B5%E5%AD%90%E6%89%8B.app/www/index.html#/tab/rank
 Terminating in response to SpringBoard's termination.
+2014-07-28 13:44:37.479 3000段子手[1936:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-28 13:44:37.499 3000段子手[1936:70b] Unlimited access to network resources
+2014-07-28 13:44:37.620 3000段子手[1936:70b] [CDVTimer][keyboard] 0.052035ms
+2014-07-28 13:44:37.620 3000段子手[1936:70b] CDVPlugin class CDVStatusBar (pluginName: statusbar) does not exist.
+2014-07-28 13:44:37.621 3000段子手[1936:70b] [CDVTimer][statusbar] 0.294983ms
+2014-07-28 13:44:37.621 3000段子手[1936:70b] [CDVTimer][TotalPluginStartup] 1.082003ms
+2014-07-28 13:44:37.720 3000段子手[1936:70b] Resetting plugins due to page load.
+2014-07-28 13:44:37.899 3000段子手[1936:70b] Finished load of: file:///Users/tbzhang/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/DA2017F2-4F07-43F9-A5CF-4F38D3E27792/3000%E6%AE%B5%E5%AD%90%E6%89%8B.app/www/index.html#/tab/rank
+Terminating in response to SpringBoard's termination.

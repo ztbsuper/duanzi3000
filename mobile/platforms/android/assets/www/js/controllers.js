@@ -3,6 +3,7 @@ var app = angular.module('starter.controllers', ['ionic']);
 
 
 app.controller('rankCtrl', function ($scope, API, favStorage, thumbs) {
+    $scope.showMore = true;
     $scope.page = 0;
     $scope.duanzis = [];
     $scope.predicate = " -thumbsup";

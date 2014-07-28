@@ -1,7 +1,7 @@
 <ion-nav-bar class="bar-energized"></ion-nav-bar>
 <ion-view title="段子">
     <ion-content class="has-header padding">
-        <div ng-repeat="duanzi in duanzis | orderBy:predicate:reverse" class="list card">
+        <div ng-repeat="duanzi in duanzis| orderBy:predicate:reverse " class="list card">
             <div class="item item-text-wrap" ng-bind-html="duanzi.body">
             </div>
 
@@ -23,7 +23,7 @@
             </div>
         </div>
         <ion-infinite-scroll
-                ng-if="count > duanzis.length"
+                ng-if="showMore"
                 icon="ion-loading-c"
                 on-infinite="fetchDuanzis()">
         </ion-infinite-scroll>
