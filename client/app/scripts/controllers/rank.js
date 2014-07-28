@@ -86,7 +86,7 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
         favStorage.removeFromFav(_id);
     };
     $scope.readLast = function () {
-        $scope.page = $scope.lastReading;
+        $scope.page = $scope.lastReading - 1;
         $scope.duanzis = [];
         $scope.count = $scope.count - ($scope.page - 1) * 10;
         $scope.fetchDuanzis();
