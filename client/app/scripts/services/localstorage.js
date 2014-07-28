@@ -34,6 +34,14 @@ app.factory('favStorage', ['StorageHelper', function (StorageHelper) {
     }
 }]);
 
+app.factory('adminStorage', function () {
+    return {
+        isAdmin: function () {
+            return localStorage.getItem('admin');
+        }
+    }
+});
+
 
 app.service('StorageHelper', function () {
     this.getStorageAsArray = function (key) {

@@ -8,18 +8,12 @@
     <button class="btn btn-danger" ng-click="remove()">Delete</button>
 </div>
 
-<div>
 
-</div>
-
-<div class="input-group" style="margin-top: 10px;">
+<div class="input-group" style="margin-top: 10px;" ng-if="isAdmin">
     <span class="input-group-addon">cheat Code</span>
     <input type="text" class="form-control" ng-model="cheatCode">
 </div>
-<div class="row" style="text-align: right;margin-top: 5px;">
-    <div class="btn-group">
-    </div>
-</div>
+
 <div ng-repeat="duanzi in duanzis| orderBy:predicate:reverse" class="well" style="margin-top: 10px;">
     <div ng-bind-html="duanzi.body">
     </div>
@@ -40,6 +34,6 @@
                 ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="removeFromFav(duanzi._id)">
             <i class="fa" ng-class="{'fa-heart-o': hover,'fa-heart':!hover}"></i>
         </button>
-        <button type="button" class="btn btn-danger btn-xs" ng-click="removeFromDuanzis($index)">Del</button>
+        <button ng-if="isAdmin" type="button" class="btn btn-danger btn-xs" ng-click="removeFromDuanzis($index)">Del</button>
     </div>
 </div>

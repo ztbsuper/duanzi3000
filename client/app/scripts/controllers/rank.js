@@ -2,15 +2,17 @@
 var app = angular.module('clientApp');
 
 
-app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs, favStorage, $location, $window) {
+app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs, favStorage, $location, adminStorage) {
     $scope.page = 0;
     $scope.loading = false;
+    $scope.isAdmin = adminStorage.isAdmin();
     API.countAllDuanzi()
         .success(function (data, status) {
             $scope.count = data;
         });
 
     $scope.duanzis = [];
+    $scope.del=[];
     $scope.fetchDuanzis = function () {
         $scope.loading = true;
         $scope.page = $scope.page + 1;
@@ -45,6 +47,13 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
             .error(function (data, status) {
             });
     };
+
+    $scope.removeFromDel = function (index) {
+        $scope.duanzis.push($scope.del.splice(index, 1)[0]);
+    };
+    $scope.removeFromDuanzis = function (index) {
+        $scope.del.push($scope.duanzis.splice(index, 1)[0]);
+    };
     $scope.remove = function () {
         API.deleteDuanzis($scope.del, $scope.cheatCode)
             .success(function (data, status) {
@@ -74,4 +83,6 @@ app.controller('rankCtrl', function ($scope, API, loadingService, $modal, thumbs
         favStorage.removeFromFav(_id);
 
     };
+
+
 });

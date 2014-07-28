@@ -1,9 +1,11 @@
 'use strict';
 var app = angular.module('clientApp');
 
-app.controller('collectionCtrl', function ($scope, $routeParams, $location, $window, API, loadingService, $modal, thumbs, favStorage) {
+app.controller('collectionCtrl', function ($scope, $routeParams, $location, $window, API, loadingService, $modal,
+                                           thumbs, favStorage, adminStorage) {
     $scope.duanzis = [];
     $scope.del = [];
+    $scope.isAdmin = adminStorage.isAdmin();
     API.fetchDuanzis($routeParams.collectionid)
         .success(function (data, status) {
             $scope.duanzis = data;
